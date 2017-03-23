@@ -3,6 +3,17 @@ const Bike = require('../lib/Bike.js');
 
 describe('Analyze the Bike class', () => {
 
+  it('1: should not be a property of Bike', () => {
+    var bike = new Bike();
+
+    assert.notProperty(bike, 'bishop of whales');
+    assert.notProperty(bike, 'saddisticEarthworm');
+    assert.notProperty(bike, 'FlashyFishSticks');
+    assert.notProperty(bike, 'pollio');
+    assert.notProperty(bike, 'tyranny');
+
+  })
+
   it('1: should be an instance of Bike', () => {
     var bike = new Bike();
 
@@ -78,6 +89,7 @@ describe('Analyze the Bike class', () => {
 
     bike.checkDirection(proposedDirection);
     assert.equal(bike.direction, 'right');
+    assert.isString(bike.direction)
   })
 
   it('12: should have a move function', () => {
@@ -86,7 +98,7 @@ describe('Analyze the Bike class', () => {
     assert.isFunction(bike.move);
   })
 
-  it('13: should move in respone to input', () => {
+  it('13: should move in response to input', () => {
     var bike = new Bike(30, 10, 20, 'red', 'up', true)
 
     bike.move("left")
@@ -111,26 +123,45 @@ describe('Analyze the Bike class', () => {
     assert.isFunction(bike.youDie)
   })
 
-  it('16: should lose a life when it leaves the game grid', () => {
+  it.skip('16: should lose a life when it leaves the game grid', () => {
     var bike = new Bike(1000, 3, 10, 'red', 'up')
 
     let stopAnimation = false
-    let testArrayOne = []
+    let coordinateArray = []
+    bike.stopAnimation = false
 
     assert.equal(bike.lives, 3)
-    bike.youDie(testArrayOne, stopAnimation)
-    assert.isArray(testArrayOne)
+    bike.youDie(coordinateArray, stopAnimation)
+    assert.isArray(coordinateArray)
+    assert.isNumber(bike.lives)
     assert.equal(bike.lives, 2)
+    // assert.isTrue(stopAnimation)
   })
 
-  it('17: should lose a life when it the location arrays are identical', () => {
+  it.skip('17: should decrease the live count', () => {
+    var bike = new Bike(1000, 3, 10, 'red', 'up', 3)
+
+    assert.decreases(bike.youdie, bike, 2)
+  })
+
+  it('18: should lose a life when it the location arrays are identical', () => {
     var bike = new Bike(10, 30, 10, 'red', 'up')
 
     let stopAnimation = false
     let testArrayOne = ["10,30"]
 
+    assert.equal(bike.lives,  3)
+    assert.isAbove(bike.lives, 2)
+    assert.isBelow(bike.lives, 4)
+    assert.isAtMost(bike.lives, 3)
+    assert.isAtLeast(bike.lives, 3)
     bike.youDie(testArrayOne, stopAnimation)
     assert.isArray(testArrayOne)
+    assert.isNumber(bike.lives)
     assert.equal(bike.lives, 2)
+    assert.isAbove(bike.lives, 1)
+    assert.isBelow(bike.lives, 3)
+    assert.isAtMost(bike.lives, 2)
+    assert.isAtLeast(bike.lives, 2)
   })
 });
