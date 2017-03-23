@@ -1,1 +1,2 @@
-require('./bikes-test.js')
+require('./Bike-test.js')
+require('./BikeTwoAI-test.js')
